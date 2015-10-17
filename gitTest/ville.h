@@ -12,6 +12,7 @@ protected:
 
     int nbHabitants;
     double superficie;
+    double pays;
 
 public:
 
