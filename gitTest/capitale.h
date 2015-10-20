@@ -10,12 +10,13 @@ private:
 
     std::string gouvernement;
     std::string pelouse;
-	std::string pelouse;
+
 public:
 
     Capitale();
     Capitale(int nbHabitants, double superficie, std::string name, std::string gouvernement);
     std::string getGouvernement();
+    void getBolosse();
 
 
 };
