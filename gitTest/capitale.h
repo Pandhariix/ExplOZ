@@ -9,7 +9,7 @@ class Capitale : Ville
 private:
 
     std::string gouvernement;
-
+    std::string pelouse;
 public:
 
     Capitale();
