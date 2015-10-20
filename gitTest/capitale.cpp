@@ -14,3 +14,8 @@ std::string Capitale::getGouvernement()
 {
     return this->gouvernement;
 }
+
+std::string Capitale::getBolosse()
+{
+    return this->gouvernement;
+}
