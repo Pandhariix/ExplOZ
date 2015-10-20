@@ -10,6 +10,7 @@ private:
 
     std::string gouvernement;
     std::string pelouse;
+	std::string pelouse;
 public:
 
     Capitale();
