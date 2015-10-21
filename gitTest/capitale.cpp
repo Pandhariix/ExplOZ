@@ -5,8 +5,9 @@ Capitale::Capitale() : Ville()
     this->gouvernement = "none";
 }
 
-void Capitale::lol(){
-    
+void Capitale::lol()
+{
+    std::cout<<"LOL"<<std::endl;
 }
 
 Capitale::Capitale(int nbHabitants, double superficie, std::string name, std::string gouvernement) : Ville(nbHabitants, superficie, name)
