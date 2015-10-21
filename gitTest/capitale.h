@@ -16,7 +16,8 @@ public:
     Capitale();
     Capitale(int nbHabitants, double superficie, std::string name, std::string gouvernement);
     std::string getGouvernement();
-    void getBolosse();
+    std::string getBolosse();
+    void lol();
 
 
 };

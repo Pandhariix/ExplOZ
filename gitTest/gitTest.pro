@@ -5,9 +5,11 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     ville.cpp \
-    capitale.cpp
+    capitale.cpp \
+    region.cpp
 
 HEADERS += \
     ville.h \
-    capitale.h
+    capitale.h \
+    region.h
 

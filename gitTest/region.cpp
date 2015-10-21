@@ -1,21 +1,29 @@
-#include "capitale.h"
+#include "region.h"
 
-Capitale::Capitale() : Ville()
+Region::Region()
 {
-    this->gouvernement = "none";
+    this->name = "none";
+    this->pays = "none";
+    this->nbHabitants = 0;
 }
 
-Capitale::Capitale(int nbHabitants, double superficie, std::string name, std::string gouvernement) : Ville(nbHabitants, superficie, name)
+Region::Region(std::string name, std::string pays, int nbHabitants)
 {
-    this->gouvernement = gouvernement;
+    this->name = name;
+    this->pays = pays;
+    this->nbHabitants = nbHabitants;
 }
 
-std::string Capitale::getGouvernement()
+std::string Region::getName()
 {
-    return this->gouvernement;
+    return this->name;
+}
+std::string Region::getPays()
+{
+    return this->pays;
+}
+int Region::getNbHabitants()
+{
+    return this->nbHabitants;
 }
 
-std::string Capitale::getBolosse()
-{
-    return this->gouvernement;
-}
