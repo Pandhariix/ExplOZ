@@ -6,7 +6,7 @@ Capitale::Capitale() : Ville()
 }
 
 void Capitale::lol(){
-    ;;;;;;
+    
 }
 
 Capitale::Capitale(int nbHabitants, double superficie, std::string name, std::string gouvernement) : Ville(nbHabitants, superficie, name)
