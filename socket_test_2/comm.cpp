@@ -1,6 +1,5 @@
 #include "comm.h"
 #include <iostream>
-#include <QThread>
 #include <QTimer>
 
 Comm::Comm(QObject *parent) : QObject(parent)
@@ -32,8 +31,6 @@ Comm::Comm(QObject *parent) : QObject(parent)
     timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     timer->start(50);
-
-    connect()
 }
 
 void Comm::detection(){
@@ -43,18 +40,4 @@ void Comm::detection(){
 void Comm::update(){
     socket_moteur->write(*data);
     std::cout << "Done" << std::endl;
-}
-
-Comm::onQuit(){
-    if(socket_moteur->isOpen())
-        socket_moteur->disconnectFromHost();
-    if(socket_capteur->isOpen())
-        socket_capteur->disconnectFromHost();
-
-    socket_capteur->deleteLater();
-    socket_moteur->deleteLater();
-
-    delete data;
-
-    delete timer;
 }
