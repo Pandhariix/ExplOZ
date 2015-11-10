@@ -9,13 +9,16 @@ class Comm : public QObject
 {
     Q_OBJECT
 public:
-    explicit Comm(QObject *parent = 0);
+    Comm(QObject *parent = 0);
+    ~Comm();
+    void run();
 
 signals:
 
 public slots:
     void detection();
     void update();
+    void handleSocketError();
 
 private:
     QTcpSocket* socket_moteur;

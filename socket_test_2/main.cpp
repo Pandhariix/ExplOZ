@@ -1,11 +1,13 @@
 #include <QCoreApplication>
-#include <comm.h>
+#include "comm.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    Comm comm();
+    Comm comm;
+
+    comm.run();
 
     return a.exec();
 }
