@@ -7,7 +7,7 @@
 class Communicator
 {
 public:
-    Communicator(QString* ip, quint16 port);
+    Communicator(QString ip, quint16 port);
     virtual void start() = 0;
 private:
     QString ip;
