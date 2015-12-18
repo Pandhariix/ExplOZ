@@ -18,8 +18,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     communicator.cpp \
-    receiver.cpp
+    receiver.cpp \
+    sender.cpp
 
 HEADERS += \
     communicator.h \
-    receiver.h
+    receiver.h \
+    sender.h
