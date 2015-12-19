@@ -21,7 +21,7 @@ enum extractMode{START,
 class Receiver : public Communicator
 {
 public:
-    Receiver(QString ip, quint8 port);
+    Receiver(QString ip, quint16 port);
 private:
     quint32 dataSize;
     extractMode eMode;

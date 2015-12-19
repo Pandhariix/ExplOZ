@@ -19,9 +19,13 @@ TEMPLATE = app
 SOURCES += main.cpp \
     communicator.cpp \
     receiver.cpp \
-    sender.cpp
+    sender.cpp \
+    motorsender.cpp \
+    toolsender.cpp
 
 HEADERS += \
     communicator.h \
     receiver.h \
-    sender.h
+    sender.h \
+    motorsender.h \
+    toolsender.h

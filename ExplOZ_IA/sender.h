@@ -7,11 +7,14 @@
 class Sender : public Communicator
 {
 public:
-    Sender();
+    Sender(quint16 port);
+    Sender(QString ip, quint16 port);
 
 signals:
 
 public slots:
+    void send();
+    virtual void translate() = 0;
 };
 
 #endif // SENDER_H
