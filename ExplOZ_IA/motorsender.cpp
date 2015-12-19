@@ -17,5 +17,5 @@ void MotorSender::setSpeed(quint8 leftSpeed, quint8 rightSpeed)
 
 void translate()
 {
-
+    //TODO
 }
