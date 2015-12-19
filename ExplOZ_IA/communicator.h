@@ -11,7 +11,7 @@
 #define PORT_GYRO 3340
 #define PORT_LIDAR 3337
 
-class Communicator
+class Communicator : public QObject
 {
 public:
     Communicator(quint16 port);

@@ -22,13 +22,17 @@ class Receiver : public Communicator
 {
 public:
     Receiver(QString ip, quint16 port);
+    void start();
+
 private:
     virtual void extractData() = 0;
 
     quint32 dataSize;
     extractMode eMode;
+
 signals:
     void newValue();
+
 public slots:
     void extract();
 };
