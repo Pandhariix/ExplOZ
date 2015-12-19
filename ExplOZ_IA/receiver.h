@@ -23,12 +23,14 @@ class Receiver : public Communicator
 public:
     Receiver(QString ip, quint16 port);
 private:
+    virtual void extractData() = 0;
+
     quint32 dataSize;
     extractMode eMode;
 signals:
     void newValue();
 public slots:
-    virtual void extract(void* returnPointer = 0) = 0;
+    void extract();
 };
 
 #endif // RECEIVER_H
