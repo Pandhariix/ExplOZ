@@ -1,6 +1,6 @@
 # PROGRAMMME DE RECALAGE POUR LA TEAM EXPLOZ
 
-# Pour l'instant, on suppose que les nuages de points sont de même taille, à modifier ulterieurement
+# nuages de points de meme taille, a modif
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -93,8 +93,11 @@ def centreDeMasse(X,Y):
     
     for i in range(nbPoints):
         
-        muX = muX + (1/nbPoints)*X[i]
-        muY = muY + (1/nbPoints)*Y[i]
+        muX = muX + X[i]
+        muY = muY + Y[i]
+    
+    muX = muX/nbPoints
+    muY = muY/nbPoints    
     
     return muX, muY
     
@@ -122,25 +125,76 @@ def SVD(Ox,Oy,Px,Py):
         PxPrime[i] = Px[i]-muPx
         PyPrime[i] = Py[i]-muPy
         
-    W = np.array([][])
-    W.resize(2,2)
     
-    W
+    OVectorPrime = np.array([])
+    PVectorPrime = np.array([])
+
+    OVectorPrime.resize(2, OxPrime.size)
+    PVectorPrime.resize(2, PxPrime.size)
+    
+    for i in range(2):
+        for j in range(OVectorPrime[0].size):
+            
+            if i==0:
+                OVectorPrime[i][j] = OxPrime[j]
+            else:
+                OVectorPrime[i][j] = OyPrime[j]
+    
+    for i in range(2):
+        for j in range(PVectorPrime[0].size):
+            
+            if i==0:
+                PVectorPrime[i][j] = PxPrime[j]
+            else:
+                PVectorPrime[i][j] = PyPrime[j]    
+    
+    W = np.array([])
+    W.resize(2,2)
+
+    W =  np.matrix(OVectorPrime)*np.matrix(PVectorPrime.T)
+    
+    U,S,Vtranspos = np.linalg.svd(W)
+
+    R = U*Vtranspos
+    t = np.matrix([muOx, muOy]).T-R*np.matrix([muPx, muPy]).T
+    
+    T = np.array([])
+    T.resize(3,3)
+    
+    T[0][0] = R.item(0,0)
+    T[0][1] = R.item(0,1)
+    T[0][2] = t.item(0,0)
+    T[1][0] = R.item(0,1)
+    T[1][1] = R.item(1,1)
+    T[1][2] = t.item(1,0)
+    T[2][0] = 0
+    T[2][1] = 0
+    T[2][2] = 1
+
+    return T
         
 #Main
 ###############################################################################
 
-X, Y = loadTxtFile("ICP.txt")
+Ox, Oy = loadTxtFile("ICP.txt")
 
-plt.scatter(X,Y,100)
+plt.scatter(Ox,Oy,100)
 plt.xlabel('x')
 plt.ylabel('y')
 
-T = createTransformationMatrix(10,10,45)
+T = createTransformationMatrix(2,2,2)
 
-X,Y = product(X,Y,T)
+Px,Py = product(Ox,Oy,T)
 
-plt.scatter(X,Y,100)
+plt.scatter(Px,Py,100, c = 'r')
+plt.xlabel('x')
+plt.ylabel('y')
+
+icpT = SVD(Ox,Oy,Px,Py)
+
+PxRecalage, PyRecalage = product(Px,Py,icpT)
+
+plt.scatter(PxRecalage,PyRecalage,100, c = 'g')
 plt.xlabel('x')
 plt.ylabel('y')
 
