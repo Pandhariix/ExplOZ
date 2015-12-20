@@ -24,11 +24,13 @@ public:
     Receiver(QString ip, quint16 port);
     void start();
 
-private:
+protected:
     virtual void extractData() = 0;
 
     quint32 dataSize;
     extractMode eMode;
+    quint32 unusedPredataSize;
+    quint32 unusedPostdataSize;
 
 signals:
     void newValue();
