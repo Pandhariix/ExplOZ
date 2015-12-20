@@ -16,48 +16,31 @@ void ToolSender::setToolAction(toolAction tAction)
 
 void ToolSender::translate()
 {
-    switch(this->tActionToTranslate)
-    {
-        case LOWER:
-            this->data.append("NAIO01");
-            this->data.append('F');
-            this->data.append((char)0);
-            this->data.append((char)0);
-            this->data.append((char)0);
-            this->data.append((char)1);
-            this->data.append((char)2);
-            this->data.append((char)0);
-            this->data.append((char)0);
-            this->data.append((char)0);
-            this->data.append((char)0);
-            break;
+    data.clear();
 
-        case RAISE:
-            this->data.append("NAIO01");
-            this->data.append('F');
-            this->data.append((char)0);
-            this->data.append((char)0);
-            this->data.append((char)0);
-            this->data.append((char)1);
-            this->data.append((char)1);
-            this->data.append((char)0);
-            this->data.append((char)0);
-            this->data.append((char)0);
-            this->data.append((char)0);
-            break;
+    this->data.append("NAIO01");
+    this->data.append('F');
+    this->data.append((char)0);
+    this->data.append((char)0);
+    this->data.append((char)0);
+    this->data.append((char)1);
 
-        case FREEZE:
-            this->data.append("NAIO01");
-            this->data.append('F');
-            this->data.append((char)0);
-            this->data.append((char)0);
-            this->data.append((char)0);
-            this->data.append((char)1);
-            this->data.append((char)3);
-            this->data.append((char)0);
-            this->data.append((char)0);
-            this->data.append((char)0);
-            this->data.append((char)0);
-            break;
-    }
+    switch(this->tActionToTranslate){
+    case LOWER:
+        this->data.append((char)2);
+        break;
+
+    case RAISE:
+        this->data.append((char)1);
+        break;
+
+    case FREEZE:
+        this->data.append((char)3);
+        break;
+     }
+
+    this->data.append((char)0);
+    this->data.append((char)0);
+    this->data.append((char)0);
+    this->data.append((char)0);
 }
