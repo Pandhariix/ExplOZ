@@ -5,7 +5,7 @@
 #include "sender.h"
 
 enum toolAction{LOWER,
-                RISE,
+                RAISE,
                 FREEZE};
 
 class ToolSender : public Sender

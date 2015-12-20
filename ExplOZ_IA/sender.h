@@ -10,6 +10,8 @@ public:
     Sender(quint16 port);
     Sender(QString ip, quint16 port);
 
+    void start();
+
 signals:
 
 public slots:
