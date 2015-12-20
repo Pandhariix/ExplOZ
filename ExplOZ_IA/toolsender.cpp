@@ -19,15 +19,45 @@ void ToolSender::translate()
     switch(this->tActionToTranslate)
     {
         case LOWER:
-            //TODO
+            this->data.append("NAIO01");
+            this->data.append('F');
+            this->data.append((char)0);
+            this->data.append((char)0);
+            this->data.append((char)0);
+            this->data.append((char)1);
+            this->data.append((char)2);
+            this->data.append((char)0);
+            this->data.append((char)0);
+            this->data.append((char)0);
+            this->data.append((char)0);
             break;
 
-        case RISE:
-            //TODO
+        case RAISE:
+            this->data.append("NAIO01");
+            this->data.append('F');
+            this->data.append((char)0);
+            this->data.append((char)0);
+            this->data.append((char)0);
+            this->data.append((char)1);
+            this->data.append((char)1);
+            this->data.append((char)0);
+            this->data.append((char)0);
+            this->data.append((char)0);
+            this->data.append((char)0);
             break;
 
         case FREEZE:
-            //TODO
+            this->data.append("NAIO01");
+            this->data.append('F');
+            this->data.append((char)0);
+            this->data.append((char)0);
+            this->data.append((char)0);
+            this->data.append((char)1);
+            this->data.append((char)3);
+            this->data.append((char)0);
+            this->data.append((char)0);
+            this->data.append((char)0);
+            this->data.append((char)0);
             break;
     }
 }
