@@ -1,24 +1,25 @@
 #include "receiver.h"
 
+#include <iostream>
+#include <string>
+
 Receiver::Receiver(QString ip, quint16 port) : Communicator(ip, port)
 {
     unusedPostdataSize = 0;
     unusedPredataSize = 0;
 }
 
-void Receiver::start(){
-    socket.connectToHost(ip, port);
-
-    eMode = START;
-
-    connect(&socket, SIGNAL(readyRead()), this, SLOT(extract()));
-}
-
 void Receiver::extract(){
+    //qDebug() << socket.readAll().toHex();
+
     if(eMode == START){
         if(socket.bytesAvailable() < 1)
             return;
-        if((socket.read(1) == "N"))
+
+        data = socket.read(1);
+        qDebug() << (QString)data;
+
+        if(data == "N")
             eMode = CONFIRMATION;
     }
 
@@ -26,17 +27,25 @@ void Receiver::extract(){
         if(socket.bytesAvailable() < 5)
             return;
 
-        if(socket.read(5) == "AIO01")
+        data = socket.read(5);
+        qDebug() << (QString)data;
+
+        if(data == "AIO01")
             eMode = ID;
-        else
+        else{
             eMode = START;
+            qDebug() << "Nope.";
+        }
     }
 
     if(eMode == ID){
         if(socket.bytesAvailable() < 1)
             return;
 
-        qDebug() << "Target ID : " + socket.read(1);
+        data = socket.read(1);
+        qDebug() << "Target ID : " << (quint8)data.at(0);
+
+        //qDebug() << "Target ID : " << socket.read(1).toLong();
 
         eMode = SIZE;
     }
@@ -45,9 +54,13 @@ void Receiver::extract(){
         if(socket.bytesAvailable() < 4)
             return;
 
-        dataSize = (socket.read(4)).toLong();
+        QDataStream ds(socket.read(4));
 
-        qDebug() << "Data block size : " + dataSize;
+        ds >> dataSize;
+
+        qDebug() << "Data block size : " << dataSize;
+
+        //while(true);
 
         eMode = UNUSED_PREDATA;
     }
@@ -63,6 +76,8 @@ void Receiver::extract(){
 
     if(eMode == DATA){
         extractData();
+
+        eMode = UNUSED_POSTDATA;
     }
 
     if(eMode == UNUSED_POSTDATA){
@@ -83,3 +98,13 @@ void Receiver::extract(){
         eMode = START;
     }
 }
+
+void Receiver::start(){
+    socket.connectToHost(ip, port);
+
+    eMode = START;
+
+    connect(&socket, SIGNAL(readyRead()), this, SLOT(extract()));
+}
+
+

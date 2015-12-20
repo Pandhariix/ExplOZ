@@ -20,6 +20,8 @@ enum extractMode{START,
 
 class Receiver : public Communicator
 {
+    Q_OBJECT
+
 public:
     Receiver(QString ip, quint16 port);
     void start();
