@@ -1,5 +1,4 @@
 #include "sender.h"
-#include <iostream>
 
 Sender::Sender(quint16 port) : Communicator(port)
 {
