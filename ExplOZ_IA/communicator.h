@@ -13,6 +13,7 @@
 
 class Communicator : public QObject
 {
+
 public:
     Communicator(quint16 port);
     Communicator(QString ip, quint16 port);

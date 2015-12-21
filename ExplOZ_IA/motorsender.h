@@ -19,7 +19,7 @@ private:
 signals:
 
 public slots:
-    void translate() = 0;
+    void translate();
 };
 
 #endif // MOTORSENDER_H

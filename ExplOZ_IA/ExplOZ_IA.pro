@@ -7,7 +7,7 @@
 QT       += core
 QT       += network
 
-QT       -= gui
+QT       += gui
 
 TARGET = ExplOZ_IA
 CONFIG   += console
@@ -21,11 +21,13 @@ SOURCES += main.cpp \
     receiver.cpp \
     sender.cpp \
     motorsender.cpp \
-    toolsender.cpp
+    toolsender.cpp \
+    acceleroreceiver.cpp
 
 HEADERS += \
     communicator.h \
     receiver.h \
     sender.h \
     motorsender.h \
-    toolsender.h
+    toolsender.h \
+    acceleroreceiver.h

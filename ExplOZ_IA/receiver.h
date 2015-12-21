@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QElapsedTimer>
-
+#include <QDataStream>
 #include "communicator.h"
 
 #define ID_SIZE_IN_BYTES 1
