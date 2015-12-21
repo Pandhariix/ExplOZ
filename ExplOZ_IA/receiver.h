@@ -2,6 +2,7 @@
 #define RECEIVER_H
 
 #include <QObject>
+#include <qdatastream.h>
 #include "communicator.h"
 
 #define ID_SIZE_IN_BYTES 1
