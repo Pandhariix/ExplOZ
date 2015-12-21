@@ -2,11 +2,13 @@
 
 MotorSender::MotorSender(quint16 port) : Sender(port)
 {
-
+    this->leftSpeedToTranslate = 0;
+    this->rightSpeedToTranslate = 0;
 }
 MotorSender::MotorSender(QString ip, quint16 port) : Sender(ip, port)
 {
-
+    this->leftSpeedToTranslate = 0;
+    this->rightSpeedToTranslate = 0;
 }
 
 void MotorSender::setSpeed(quint8 leftSpeed, quint8 rightSpeed)
