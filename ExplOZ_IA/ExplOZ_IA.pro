@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     sender.cpp \
     motorsender.cpp \
     toolsender.cpp \
-    acceleroreceiver.cpp
+    acceleroreceiver.cpp \
+    lidarreceiver.cpp
 
 HEADERS += \
     communicator.h \
@@ -30,4 +31,5 @@ HEADERS += \
     sender.h \
     motorsender.h \
     toolsender.h \
-    acceleroreceiver.h
+    acceleroreceiver.h \
+    lidarreceiver.h
