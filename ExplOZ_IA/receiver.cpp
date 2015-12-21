@@ -72,6 +72,9 @@ void Receiver::extract(){
     }
 
     if(eMode == DATA){
+        if(socket.bytesAvailable() < dataSize - unusedPostdataSize - unusedPredataSize)
+            return;
+
         extractData();
 
         eMode = UNUSED_POSTDATA;

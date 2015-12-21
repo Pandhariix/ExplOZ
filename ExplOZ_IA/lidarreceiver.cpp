@@ -7,9 +7,6 @@ LidarReceiver::LidarReceiver(QString ip, quint16 port) : Receiver(ip, port)
 }
 
 void LidarReceiver::extractData(){
-    if(socket.bytesAvailable() < dataSize - unusedPostdataSize - unusedPredataSize)
-        return;
-
     data = socket.read(dataSize - unusedPostdataSize - unusedPredataSize);
 
     QDataStream ds(data);
