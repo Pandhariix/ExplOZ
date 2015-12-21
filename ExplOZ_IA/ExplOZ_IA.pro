@@ -21,11 +21,13 @@ SOURCES += main.cpp \
     receiver.cpp \
     sender.cpp \
     motorsender.cpp \
-    toolsender.cpp
+    toolsender.cpp \
+    acceleroreceiver.cpp
 
 HEADERS += \
     communicator.h \
     receiver.h \
     sender.h \
     motorsender.h \
-    toolsender.h
+    toolsender.h \
+    acceleroreceiver.h

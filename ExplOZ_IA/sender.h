@@ -2,6 +2,7 @@
 #define SENDER_H
 
 #include <QObject>
+#include <qtimer.h>
 #include "communicator.h"
 
 class Sender : public Communicator
@@ -11,6 +12,9 @@ public:
     Sender(QString ip, quint16 port);
 
     void start();
+
+protected:
+    QTimer *timer;
 
 signals:
 

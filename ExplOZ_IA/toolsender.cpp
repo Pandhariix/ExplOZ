@@ -3,10 +3,12 @@
 ToolSender::ToolSender(quint16 port) : Sender(port)
 {
     this->tActionToTranslate = FREEZE;
+    this->translate();
 }
 ToolSender::ToolSender(QString ip, quint16 port) : Sender(ip, port)
 {
     this->tActionToTranslate = FREEZE;
+    this->translate();
 }
 
 void ToolSender::setToolAction(toolAction tAction)
