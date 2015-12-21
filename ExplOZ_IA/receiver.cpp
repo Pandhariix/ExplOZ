@@ -3,15 +3,12 @@
 #include <iostream>
 #include <string>
 
-Receiver::Receiver(QString ip, quint16 port) : Communicator(ip, port)
-{
+Receiver::Receiver(QString ip, quint16 port) : Communicator(ip, port){
     unusedPostdataSize = 0;
     unusedPredataSize = 0;
 }
 
 void Receiver::extract(){
-    //qDebug() << socket.readAll().toHex();
-
     if(eMode == START){
         if(socket.bytesAvailable() < 1)
             return;
@@ -42,10 +39,12 @@ void Receiver::extract(){
         if(socket.bytesAvailable() < 1)
             return;
 
-        data = socket.read(1);
-        qDebug() << "Target ID : " << (quint8)data.at(0);
+        QDataStream ds(socket.read(1));
+        quint8 id;
 
-        //qDebug() << "Target ID : " << socket.read(1).toLong();
+        ds >> id;
+
+        qDebug() << "Target ID : " << id;
 
         eMode = SIZE;
     }
@@ -59,8 +58,6 @@ void Receiver::extract(){
         ds >> dataSize;
 
         qDebug() << "Data block size : " << dataSize;
-
-        //while(true);
 
         eMode = UNUSED_PREDATA;
     }
@@ -106,5 +103,4 @@ void Receiver::start(){
 
     connect(&socket, SIGNAL(readyRead()), this, SLOT(extract()));
 }
-
 
