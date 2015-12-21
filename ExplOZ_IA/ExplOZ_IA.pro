@@ -7,7 +7,7 @@
 QT       += core
 QT       += network
 
-QT       -= gui
+QT       += gui
 
 TARGET = ExplOZ_IA
 CONFIG   += console

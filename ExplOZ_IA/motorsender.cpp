@@ -17,6 +17,7 @@ void MotorSender::setSpeed(quint8 leftSpeed, quint8 rightSpeed)
 {
     this->leftSpeedToTranslate = leftSpeed;
     this->rightSpeedToTranslate = rightSpeed;
+    this->translate();
 }
 
 void MotorSender::translate()

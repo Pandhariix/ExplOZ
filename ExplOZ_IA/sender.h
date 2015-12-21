@@ -7,6 +7,8 @@
 
 class Sender : public Communicator
 {
+    Q_OBJECT
+
 public:
     Sender(quint16 port);
     Sender(QString ip, quint16 port);
