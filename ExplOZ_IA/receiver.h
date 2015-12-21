@@ -2,6 +2,8 @@
 #define RECEIVER_H
 
 #include <QObject>
+#include <QElapsedTimer>
+
 #include "communicator.h"
 
 #define ID_SIZE_IN_BYTES 1
@@ -23,8 +25,10 @@ class Receiver : public Communicator
     Q_OBJECT
 
 public:
-    Receiver(QString ip, quint16 port);
+    Receiver(QString ip, quint16 port, QElapsedTimer* appTime);
     void start();
+
+    quint64 getLastRecTime();
 
 protected:
     virtual void extractData() = 0;
@@ -33,6 +37,9 @@ protected:
     extractMode eMode;
     quint32 unusedPredataSize;
     quint32 unusedPostdataSize;
+    QElapsedTimer* appTime;
+
+    quint64 lastRecTime;
 
 signals:
     void newValue();

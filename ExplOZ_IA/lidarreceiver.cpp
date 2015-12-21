@@ -1,6 +1,6 @@
 #include "lidarreceiver.h"
 
-LidarReceiver::LidarReceiver(QString ip, quint16 port) : Receiver(ip, port)
+LidarReceiver::LidarReceiver(QString ip, quint16 port, QElapsedTimer* appTime) : Receiver(ip, port, appTime)
 {
     unusedPredataSize = 46 * 2;
     unusedPostdataSize = 45 * 2 + 271;
@@ -14,6 +14,11 @@ void LidarReceiver::extractData(){
     for (uint i = 0 ; i < (dataSize - unusedPostdataSize - unusedPredataSize)/2 ; i++){
         ds >> distance[i];
 
-        qDebug() << "distance[" << i << "] = " << distance[i];
+        //qDebug() << "distance[" << i << "] = " << distance[i];
     }
+}
+
+void LidarReceiver::getDistance(quint16* dist){
+    for (int i = 0 ; i < 180 ; i++)
+        dist[i] = distance[i];
 }

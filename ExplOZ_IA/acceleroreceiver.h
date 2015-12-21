@@ -6,7 +6,7 @@
 class AcceleroReceiver : public Receiver
 {
 public:
-    AcceleroReceiver(QString ip, quint16 port);
+    AcceleroReceiver(QString ip, quint16 port, QElapsedTimer *appTime);
 private:
     qint16 accX;
     qint16 accY;

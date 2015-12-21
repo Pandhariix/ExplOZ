@@ -6,7 +6,10 @@
 class LidarReceiver : public Receiver
 {
 public:
-    LidarReceiver(QString ip, quint16 port);
+    LidarReceiver(QString ip, quint16 port, QElapsedTimer *appTime);
+
+    void getDistance(quint16* dist);
+
 private:
     void extractData();
 

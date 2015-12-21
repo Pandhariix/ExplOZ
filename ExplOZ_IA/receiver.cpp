@@ -3,12 +3,14 @@
 #include <iostream>
 #include <string>
 
-Receiver::Receiver(QString ip, quint16 port) : Communicator(ip, port){
+Receiver::Receiver(QString ip, quint16 port, QElapsedTimer* appTime) : Communicator(ip, port){
     unusedPostdataSize = 0;
     unusedPredataSize = 0;
+
+    this->appTime = appTime;
 }
 
-void Receiver::extract(){
+void Receiver::extract(){    
     if(eMode == START){
         if(socket.bytesAvailable() < 1)
             return;
@@ -96,6 +98,10 @@ void Receiver::extract(){
         socket.read(4);
 
         eMode = START;
+
+        lastRecTime = appTime->elapsed();
+
+        qDebug() << "Received at : " << lastRecTime;
     }
 }
 
@@ -105,5 +111,9 @@ void Receiver::start(){
     eMode = START;
 
     connect(&socket, SIGNAL(readyRead()), this, SLOT(extract()));
+}
+
+quint64 Receiver::getLastRecTime(){
+    return lastRecTime;
 }
 

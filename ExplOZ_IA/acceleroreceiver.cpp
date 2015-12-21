@@ -1,6 +1,6 @@
 #include "acceleroreceiver.h"
 
-AcceleroReceiver::AcceleroReceiver(QString ip, quint16 port) : Receiver(ip, port)
+AcceleroReceiver::AcceleroReceiver(QString ip, quint16 port, QElapsedTimer* appTime) : Receiver(ip, port, appTime)
 {
     unusedPostdataSize = 0;
     unusedPredataSize = 0;
