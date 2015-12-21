@@ -14,6 +14,7 @@ ToolSender::ToolSender(QString ip, quint16 port) : Sender(ip, port)
 void ToolSender::setToolAction(toolAction tAction)
 {
     this->tActionToTranslate = tAction;
+    this->translate();
 }
 
 void ToolSender::translate()
