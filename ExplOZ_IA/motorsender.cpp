@@ -15,7 +15,20 @@ void MotorSender::setSpeed(quint8 leftSpeed, quint8 rightSpeed)
     this->rightSpeedToTranslate = rightSpeed;
 }
 
-void translate()
+void MotorSender::translate()
 {
-    //TODO
+    this->data.clear();
+
+    this->data.append("NAIO01");
+    this->data.append(1);
+    this->data.append((char)0);
+    this->data.append((char)0);
+    this->data.append((char)0);
+    this->data.append((char)2);
+    this->data.append((char)this->leftSpeedToTranslate);
+    this->data.append((char)this->rightSpeedToTranslate);
+    this->data.append((char)0);
+    this->data.append((char)0);
+    this->data.append((char)0);
+    this->data.append((char)0);
 }
