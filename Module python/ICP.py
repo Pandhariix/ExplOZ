@@ -5,6 +5,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+#Class
+###############################################################################
+class Point:
+    def __init__(self):
+        self.x = 0.0
+        self.y = 0.0
+    
+    def setData(self,x,y):
+        self.x = x
+        self.y = y
+
+
+
 #Methods
 ###############################################################################
 def sin(nbDegre):
@@ -18,7 +32,7 @@ def cos(nbDegre):
 
 def loadTxtFile(fileName):
     
-    X,Y = np.loadtxt(fileName, unpack = True)
+    X, Y , Z = np.loadtxt(fileName, unpack = True)
     X.astype(int)
     Y.astype(int)
     
@@ -71,7 +85,7 @@ def product(X,Y,T):
     Ytemp = np.array([])
     
     Xtemp.resize(X.size)
-    Ytemp.resize(Y.size)    
+    Ytemp.resize(Y.size)
     
     for i in range(X.size):
         Xtemp[i] = T[0][0]*X[i] + T[0][1]*Y[i] + T[0][2]
@@ -173,18 +187,34 @@ def SVD(Ox,Oy,Px,Py):
 
     return T
         
+        
+def buildPointList(X,Y):
+    
+    pointList = list()
+    point = Point()
+    
+    for i in range(X.size):                
+        point.setData(X[i],Y[i])        
+        pointList.append(point)
+    
+    return pointList
+        
 #Main
 ###############################################################################
 
-Ox, Oy = loadTxtFile("ICP.txt")
+Ox, Oy = loadTxtFile("data.txt")
+
+pointOrigineList = buildPointList(Ox, Oy)
 
 plt.scatter(Ox,Oy,100)
 plt.xlabel('x')
 plt.ylabel('y')
 
-T = createTransformationMatrix(2,2,2)
+T = createTransformationMatrix(100,100,2)
 
 Px,Py = product(Ox,Oy,T)
+
+pointNoiseList = buildPointList(Px, Py)
 
 plt.scatter(Px,Py,100, c = 'r')
 plt.xlabel('x')
@@ -193,6 +223,8 @@ plt.ylabel('y')
 icpT = SVD(Ox,Oy,Px,Py)
 
 PxRecalage, PyRecalage = product(Px,Py,icpT)
+
+pointSetList = buildPointList(PxRecalage, PyRecalage)
 
 plt.scatter(PxRecalage,PyRecalage,100, c = 'g')
 plt.xlabel('x')

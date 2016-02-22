@@ -42,10 +42,40 @@ def cos(nbDegre):
 def tan(nbDegre):
     return sin(nbDegre)/cos(nbDegre)
 
+
+def translateLidarData(angle, distance):
+    
+    predivDist = 1
+    
+    X = np.array([])
+    Y = np.array([])    
+    
+    Xlist = list()
+    Ylist = list()    
+    
+    for i in range (angle.size):
+        if distance[i] != 4000:
+            Xlist.append((distance[i]/predivDist)*cos(angle[i]))
+            Ylist.append((distance[i]/predivDist)*sin(angle[i]))
+    
+    X.resize(len(Xlist))
+    Y.resize(len(Ylist))
+
+    for i in range (len(Xlist)):
+        X[i] = Xlist[i]
+        Y[i] = Ylist[i]        
+    
+    return X, Y
+
 #Main
 ###############################################################################
 
-X, Y, Z = np.loadtxt("data.txt", unpack=True)
+#X, Y, Z = np.loadtxt("data.txt", unpack=True)
+angle, distance = np.loadtxt("lidar.txt", unpack=True)
+
+X, Y = translateLidarData(angle, distance)
+
+X,Y,Z = np.loadtxt("results.txt", unpack=True)
 
 X.astype(int)
 Y.astype(int)
@@ -77,18 +107,52 @@ rho, theta, H = houghTransform(MatPts)
 
 colsH = H[0].size
 rowsH = H.size/H[0].size
-threshold = 10
+threshold = 6
 
-listePtsInteret = []
+listePtsInteret = list()
 
-value1 = -20    # a choisir en fonction de l'echelle du graph
-value2 = 140
+xGauche = -15
+xDroit = 10
+yBas = 0
+yHaut = 15
+
+value1 = xGauche    # a choisir en fonction de l'echelle du graph
+value2 = xDroit
 
 for i in range(rowsH):
     for j in range(colsH):
         
         if H[i][j] >= threshold:
             
+            
+            if ((theta[j] < 3)-(theta > -3)).any():
+               listePtsInteret.append([[rho[i],rho[i]],[yBas,yHaut]])
+               
+            elif ((theta[j] < 183)-(theta > -177)).any(): 
+                  listePtsInteret.append([[rho[i],rho[i]],[yBas,yHaut]])
+            '''
+            epsilon = 0.0001
+            listePtsInteret.append([[value1,value2],[(-value1/(tan(theta[j])+epsilon))+(rho[i]/(sin(theta[j])+epsilon)),(-value2/(tan(theta[j])+epsilon))+(rho[i]/(sin(theta[j])+epsilon))]])            
+            '''
+            '''
+            if theta[j] == 0:
+                listePtsInteret.append([[rho[i],rho[i]],[yBas,yHaut]])
+                
+            elif theta[j] == 180:
+                listePtsInteret.append([[-rho[i],-rho[i]],[yBas,yHaut]])
+            
+            elif theta[j] == 90:
+                listePtsInteret.append([[xGauche,xDroit],[rho[i], rho[i]]])
+                
+            elif theta[j] == -90:
+                listePtsInteret.append([[xGauche,xDroit],[-rho[i], -rho[i]]])
+                
+            else:
+                listePtsInteret.append([[xGauche,xDroit],[(-xGauche/tan(theta[j]))+(rho[i]/sin(theta[j])),(-xDroit/tan(theta[j]))+(rho[i]/sin(theta[j]))]])
+            '''
+            
+            #Lignes classiques transformee de Hough
+            '''
             if theta[j] == 0:
                 listePtsInteret.append([[value1,value2],[rho[i],rho[i]]])
             
@@ -100,17 +164,16 @@ for i in range(rowsH):
 
             else:
                 listePtsInteret.append([[value1,value2],[(-value1/tan(theta[j]))+(rho[i]/sin(theta[j])),(-value2/tan(theta[j]))+(rho[i]/sin(theta[j]))]])
-
+            '''
 
 
 plt.scatter(X,Y,100)
+plt.axis([xGauche, xDroit, yBas, yHaut])
 plt.title('Nuage de points avec Matplotlib')
 plt.xlabel('x')
 plt.ylabel('y')
 
 for a in range(len(listePtsInteret)):
     plt.plot(listePtsInteret[a][0], listePtsInteret[a][1], 'r-', lw=2)
-
+    
 plt.show()
-
-plt.imshow(H)
