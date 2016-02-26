@@ -10,8 +10,10 @@ MotionControl::MotionControl(QElapsedTimer *elapsedTimer, LidarReceiver *lidar, 
 
 void MotionControl::commandLoop()
 {
+
     if(this->elapsedTimer->msecsSinceReference() < 2000)
         return;
+
 
     //Hough operations
 
@@ -19,6 +21,8 @@ void MotionControl::commandLoop()
     this->detector.buildCartesianMap(this->distance, this->factor);
     this->detector.transform();
     this->detector.getDetectedLines(this->lines, wall);
+
+    //qDebug() << this->lines[0].first << this->lines[0].second;
 
     //
 
@@ -40,6 +44,6 @@ void MotionControl::commandLoop()
 void MotionControl::start()
 {
     connect(this->timer, SIGNAL(timeout()), this, SLOT(commandLoop()));
-    this->timer->start(1000);
+    this->timer->start(0);
 }
 

@@ -35,6 +35,14 @@ void HoughDetector::transform()
     cv::Canny(this->map, this->map, 50, 200, 3);
     cv::HoughLines(this->map, this->detectedLines, 1, PI/180, 25);
 
+    //DEBUG
+
+    /*
+    if(detectedLines.size() > 0)
+        std::cout<<"plop"<<std::endl;
+    else
+        std::cout<<"nooope"<<std::endl;
+    */
     /*
     for(std::vector<cv::Vec2f>::size_type i = 0; i != this->detectedLines.size(); i++)
     {
@@ -73,7 +81,10 @@ void HoughDetector::getDetectedLines(std::vector<std::pair<float, float> > &line
     lines.clear();
 
     if(detectedLines.size() == 0)
+    {
+        cv::imshow("debug console", this->map);
         return;
+    }
 
     for(size_t i=0 ; i<detectedLines.size() ; i++)
     {
@@ -97,24 +108,24 @@ void HoughDetector::getDetectedLines(std::vector<std::pair<float, float> > &line
         lines.push_back(std::make_pair(resRhoG, resThetaG));
         lines.push_back(std::make_pair(resRhoD, resThetaD));
         wall = BOTH;
-        std::cout<<"Les deux"<<std::endl;
+        //std::cout<<"Les deux"<<std::endl;
     }
     else if(resRhoG != 0 && resRhoD == 0)
     {
         lines.push_back(std::make_pair(resRhoG, resThetaG));
         wall = LEFT;
-        std::cout<<"hauche"<<std::endl;
+        //std::cout<<"hauche"<<std::endl;
     }
     else if(resRhoG == 0 && resRhoD != 0)
     {
         lines.push_back(std::make_pair(resRhoD, resThetaD));
         wall = RIGHT;
-        std::cout<<"droite"<<std::endl;
+        //std::cout<<"droite"<<std::endl;
     }
     else if(resRhoG == 0 && resRhoD == 0)
     {
         wall = NONE;
-        std::cout<<"nada"<<std::endl;
+        //std::cout<<"nada"<<std::endl;
     }
 
 
@@ -132,6 +143,6 @@ void HoughDetector::getDetectedLines(std::vector<std::pair<float, float> > &line
 
         cv::line(this->map, pt1, pt2, cv::Scalar(255,255,255), 3, 8);
      }
-     std::cout<<this->detectedLines.size()<<" "<<lines.size()<<std::endl;
+     //std::cout<<this->detectedLines.size()<<" "<<lines.size()<<std::endl;
      cv::imshow("debug console", this->map);
 }

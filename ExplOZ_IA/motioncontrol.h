@@ -40,7 +40,7 @@ private:
     std::vector<std::pair<float, float> > lines;
     directionWall wall;
 
-    int factor = 8;
+    int factor = 10;
     std::vector<quint16> distance;
     HoughDetector detector;
 

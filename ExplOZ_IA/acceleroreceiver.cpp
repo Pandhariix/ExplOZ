@@ -13,5 +13,5 @@ void AcceleroReceiver::extractData(){
     ds >> accY;
     ds >> accZ;
 
-    qDebug() << "AccX : " << accX << " ; AccY : " << accY << " ; AccZ : " << accZ;
+    //qDebug() << "AccX : " << accX << " ; AccY : " << accY << " ; AccZ : " << accZ;
 }

@@ -5,12 +5,13 @@
 #include <QKeyEvent>
 #include <qtimer.h>
 #include "motorsender.h"
+#include "toolsender.h"
 
 class ManualControler : public QWidget
 {
     Q_OBJECT
 public:
-    ManualControler(MotorSender *motSender);
+    ManualControler(MotorSender *motSender, ToolSender *toolSender);
     void start();
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
@@ -18,6 +19,7 @@ public:
 private:
     QTimer *timer;
     MotorSender *motorSender;
+    ToolSender *toolSender;
 
     quint8 rightSpeed;
     quint8 leftSpeed;

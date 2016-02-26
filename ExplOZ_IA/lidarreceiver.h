@@ -15,7 +15,6 @@ public:
 
 private:
     void extractData();
-
     quint16 distance[181];
 };
 

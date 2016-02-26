@@ -95,7 +95,8 @@ void Receiver::extract(){
         if(socket.bytesAvailable() < 4)
             return;
 
-        socket.read(4);
+        //socket.read(4);
+        socket.readAll();
 
         eMode = START;
 
