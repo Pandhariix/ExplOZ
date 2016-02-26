@@ -37,6 +37,8 @@ private:
     QElapsedTimer *elapsedTimer;
     LidarReceiver *lidar;
     MotorSender *motSender;
+    std::vector<std::pair<float, float> > lines;
+    directionWall wall;
 
     int factor = 8;
     std::vector<quint16> distance;

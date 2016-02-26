@@ -7,6 +7,7 @@
 #include "toolsender.h"
 
 #include "motioncontrol.h"
+#include "manualcontroler.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -17,12 +18,22 @@ int main(int argc, char *argv[])
     QElapsedTimer appTime;
     appTime.start();
 
-    LidarReceiver lRec("127.0.0.1", PORT_LIDAR, &appTime);
-    lRec.start();
 
     MotorSender motSender("127.0.0.1",PORT_MOTOR);
-    //motSender.setSpeed(50,50);
+
+    motSender.setSpeed(50,50);
     motSender.start();
+
+    /*
+    ManualControler manual(&motSender);
+    manual.setMaximumWidth(20);
+    manual.setMaximumHeight(20);
+    manual.show();
+    */
+
+
+    LidarReceiver lRec("127.0.0.1", PORT_LIDAR, &appTime);
+    lRec.start();
 
     MotionControl motion(&appTime, &lRec, &motSender);
     motion.start();

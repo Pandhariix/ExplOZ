@@ -18,6 +18,7 @@ void MotionControl::commandLoop()
     this->lidar->getDistance(this->distance);
     this->detector.buildCartesianMap(this->distance, this->factor);
     this->detector.transform();
+    this->detector.getDetectedLines(this->lines, wall);
 
     //
 

@@ -10,11 +10,10 @@
 #define PI 3.14159265
 
 
-typedef struct cabbageWall
-{
-    double a;
-    double b;
-}cabbageWall;
+enum directionWall{RIGHT,
+                   LEFT,
+                   BOTH,
+                   NONE};
 
 
 
@@ -26,11 +25,10 @@ public:
 
     void buildCartesianMap(std::vector<quint16> &distance, int factor);
     void transform();
-    void getDetectedLines(std::vector<std::pair<float> > &lines);
+    void getDetectedLines(std::vector<std::pair<float, float> > &lines, directionWall &wall);
 
 private:
     std::vector<cv::Vec2f> detectedLines;
-    std::vector<cabbageWall> walls;
     int factor;
     cv::Mat map;
     cv::Mat edges;

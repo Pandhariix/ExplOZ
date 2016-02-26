@@ -28,7 +28,8 @@ SOURCES += main.cpp \
     acceleroreceiver.cpp \
     lidarreceiver.cpp \
     houghdetector.cpp \
-    motioncontrol.cpp
+    motioncontrol.cpp \
+    manualcontroler.cpp
 
 HEADERS += \
     communicator.h \
@@ -39,4 +40,5 @@ HEADERS += \
     acceleroreceiver.h \
     lidarreceiver.h \
     houghdetector.h \
-    motioncontrol.h
+    motioncontrol.h \
+    manualcontroler.h
