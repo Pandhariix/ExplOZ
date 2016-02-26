@@ -16,7 +16,7 @@ void Receiver::extract(){
             return;
 
         data = socket.read(1);
-        qDebug() << (QString)data;
+        //qDebug() << (QString)data;
 
         if(data == "N")
             eMode = CONFIRMATION;
@@ -27,13 +27,13 @@ void Receiver::extract(){
             return;
 
         data = socket.read(5);
-        qDebug() << (QString)data;
+        //qDebug() << (QString)data;
 
         if(data == "AIO01")
             eMode = ID;
         else{
             eMode = START;
-            qDebug() << "Nope.";
+            //qDebug() << "Nope.";
         }
     }
 
@@ -46,7 +46,7 @@ void Receiver::extract(){
 
         ds >> id;
 
-        qDebug() << "Target ID : " << id;
+        //qDebug() << "Target ID : " << id;
 
         eMode = SIZE;
     }
@@ -59,7 +59,7 @@ void Receiver::extract(){
 
         ds >> dataSize;
 
-        qDebug() << "Data block size : " << dataSize;
+        //qDebug() << "Data block size : " << dataSize;
 
         eMode = UNUSED_PREDATA;
     }
@@ -101,7 +101,7 @@ void Receiver::extract(){
 
         lastRecTime = appTime->elapsed();
 
-        qDebug() << "Received at : " << lastRecTime;
+        //qDebug() << "Received at : " << lastRecTime;
     }
 }
 

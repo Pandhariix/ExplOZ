@@ -11,8 +11,7 @@ class LidarReceiver : public Receiver
 public:
     LidarReceiver(QString ip, quint16 port, QElapsedTimer *appTime);
 
-    void getDistance(quint16* dist);
-    void getCartesianLidarMap(QVector<QPair<double,double> > &cartesianLidarMap);
+    void getDistance(std::vector<quint16> &dist);
 
 private:
     void extractData();

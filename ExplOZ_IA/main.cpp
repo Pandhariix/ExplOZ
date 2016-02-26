@@ -6,9 +6,13 @@
 #include "motorsender.h"
 #include "toolsender.h"
 
+#include "motioncontrol.h"
+#include <QApplication>
+
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    //QCoreApplication a(argc, argv);
+    QApplication a(argc, argv);
 
     QElapsedTimer appTime;
     appTime.start();
@@ -16,16 +20,22 @@ int main(int argc, char *argv[])
     LidarReceiver lRec("127.0.0.1", PORT_LIDAR, &appTime);
     lRec.start();
 
+    MotorSender motSender("127.0.0.1",PORT_MOTOR);
+    //motSender.setSpeed(50,50);
+    motSender.start();
+
+    MotionControl motion(&appTime, &lRec, &motSender);
+    motion.start();
+
+
+    /*
     AcceleroReceiver accRec("127.0.0.1", PORT_ACCELERO, &appTime);
     accRec.start();
-
-    MotorSender motSender("127.0.0.1",PORT_MOTOR);
-    motSender.setSpeed(50,50);
-    motSender.start();
 
     ToolSender tSender("127.0.0.1",PORT_TOOL);
     tSender.setToolAction(LOWER);
     tSender.start();
+    */
 
     return a.exec();
 }
