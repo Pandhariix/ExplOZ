@@ -16,7 +16,7 @@ MotionControl::MotionControl(QElapsedTimer *elapsedTimer, LidarReceiver *lidar, 
 void MotionControl::commandLoop()
 {
     if(modeVirage==false){
-        qDebug()<<"COucou";
+        //qDebug()<<"COucou";
         if(this->elapsedTimer->msecsSinceReference() < 2000)
             return;
 
@@ -28,13 +28,13 @@ void MotionControl::commandLoop()
         this->detector.transform();
         this->detector.getDetectedLines(this->lines, wall);
 
-        qDebug() << "size : " << lines.size();
+        //qDebug() << "size : " << lines.size();
         int deltaDG;
         int deltaDD;
         switch(wall) {
         case RIGHT:
             compteurVirage=0;
-            qDebug()<<"rho"<<lines[0].first;
+            //qDebug()<<"rho"<<lines[0].first;
             if(lines[0].second>3.1415/2){
                 theta=-3.1415+lines[0].second;
             }
@@ -51,7 +51,7 @@ void MotionControl::commandLoop()
             break;
         case LEFT:
             compteurVirage=0;
-            qDebug()<<"rho"<<lines[0].first;
+            //qDebug()<<"rho"<<lines[0].first;
             if(lines[0].second>3.1415/2){
                 theta=3.1415-lines[0].second;
             }
@@ -66,7 +66,7 @@ void MotionControl::commandLoop()
 
 
         */
-            qDebug() << "Left";
+            //qDebug() << "Left";
             break;
         case BOTH:
             compteurVirage=0;
@@ -98,7 +98,7 @@ void MotionControl::commandLoop()
             compteurVirage++;
             theta=0;
             deltaD=0;
-            qDebug() <<"None";
+            //qDebug() <<"None";
 
             if(compteurVirage>10){
                 modeVirage = true;
@@ -149,7 +149,7 @@ void MotionControl::commandLoop()
             }
             break;
         case 1:
-            qDebug() << "Ontourne";
+            //qDebug() << "Ontourne";
             motSender->setSpeed(VMAX/4,VMAX);
             if(gyro->angleZ-angleDebutVirage>PARAMETREANGLE){
                 tempsDebutDemiTour=elapsedTimer->elapsed();
@@ -157,7 +157,7 @@ void MotionControl::commandLoop()
             }
             break;
         case 2:
-            qDebug() << "Onrecule";
+            //qDebug() << "Onrecule";
             motSender->setSpeed(-VMAX,-VMAX);
             if(elapsedTimer->elapsed()-tempsDebutDemiTour>TEMPSMARCHEARRIERE){
                 angleDebutVirage=gyro->angleZ;
@@ -166,7 +166,7 @@ void MotionControl::commandLoop()
             break;
         case 3:
             motSender->setSpeed(VMAX/4,VMAX);
-            qDebug() << "angledebut : " << angleDebutVirage << "angleZ : " << gyro->angleZ;
+            //qDebug() << "angledebut : " << angleDebutVirage << "angleZ : " << gyro->angleZ;
 
             if((gyro->angleZ-angleDebutVirage)>PARAMETREANGLE){
                 tempsDebutDemiTour=elapsedTimer->elapsed();

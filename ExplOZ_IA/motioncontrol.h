@@ -4,12 +4,12 @@
 #define KD 1.2
 #define KTHETA 1.1
 
-#define VMAX 100
+#define VMAX 80
 #define OFFSETWALL 40
 
 #define TEMPSDEMITOURAVANT 6000
 #define PARAMETREANGLE 2900
-#define TEMPSMARCHEARRIERE 100
+#define TEMPSMARCHEARRIERE 2000
 
 #include <qtimer.h>
 #include <qelapsedtimer.h>

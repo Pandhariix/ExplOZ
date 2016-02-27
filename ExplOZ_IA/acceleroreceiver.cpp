@@ -13,8 +13,11 @@ void AcceleroReceiver::extractData(){
     ds >> accY;
     ds >> accZ;
     angleZ=angleZ+accZ*(appTime->elapsed()-dernierAcquisitionTemps)/1000;
+
+    //qDebug() << " dern acq " <<dernierAcquisitionTemps;
     dernierAcquisitionTemps=appTime->elapsed();
 
-    //qDebug() << "AccX : " << accX << " ; AccY : " << accY << " ; AccZ : " << accZ;
+    //qDebug() << " AccZ : " << accZ << " AngleZ : " << angleZ;
+    //socket.readAll();
 }
 

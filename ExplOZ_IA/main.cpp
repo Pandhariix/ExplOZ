@@ -19,7 +19,8 @@ int main(int argc, char *argv[])
     appTime.start();
 
     //QString ip = "192.168.5.11";
-    QString ip = "127.0.0.1";
+    //QString ip = "127.0.0.1";
+    QString ip = "192.168.1.1";
 
     MotorSender motSender(ip,PORT_MOTOR);
     //motSender.setSpeed(50,50);
