@@ -32,6 +32,7 @@ void HoughDetector::transform()
     double x0, y0;
     cv::Point pt1, pt2;
 
+    cv::dilate(this->map, this->map, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3,6)));
     cv::Canny(this->map, this->map, 50, 200, 3);
     cv::HoughLines(this->map, this->detectedLines, 1, PI/180, 25);
 
@@ -73,12 +74,17 @@ void HoughDetector::getDetectedLines(std::vector<std::pair<float, float> > &line
     int posXRobot = static_cast<int> (LIDAR_DETECTION_X/(2*this->factor));
     int minimumG = posXRobot;
     int minimumD = posXRobot;
-    float resRhoG;
-    float resThetaG;
-    float resRhoD;
-    float resThetaD;
+    float resRhoG = 0;
+    float resThetaG = 0;
+    float resRhoD = 0;
+    float resThetaD = 0;
 
     lines.clear();
+
+    wall = NONE;
+
+    bool isThereRight = false;
+    bool isThereLeft = false;
 
     if(detectedLines.size() == 0)
     {
@@ -88,45 +94,45 @@ void HoughDetector::getDetectedLines(std::vector<std::pair<float, float> > &line
 
     for(size_t i=0 ; i<detectedLines.size() ; i++)
     {
-        if(this->detectedLines[i][0]*cos(this->detectedLines[i][1]) < static_cast<float> (posXRobot) && static_cast<float> (posXRobot) - this->detectedLines[i][0]*cos(this->detectedLines[i][1]) < static_cast<float> (minimumG))
+        if( abs(static_cast<int> (this->detectedLines[i][0]/cos(this->detectedLines[i][1]))) < posXRobot && posXRobot - abs(static_cast<int> (this->detectedLines[i][0]/cos(this->detectedLines[i][1]))) < minimumG)
         {
-            minimumG = static_cast<int> ( static_cast<float> (posXRobot) - this->detectedLines[i][0]*cos(this->detectedLines[i][1]));
+            minimumG = posXRobot - abs(static_cast<int> (this->detectedLines[i][0]/cos(this->detectedLines[i][1])));
             resRhoG = this->detectedLines[i][0];
             resThetaG = this->detectedLines[i][1];
+
+            isThereLeft = true;
+            wall=LEFT;
         }
 
-        if(this->detectedLines[i][0]*cos(this->detectedLines[i][1]) > static_cast<float> (posXRobot) && this->detectedLines[i][0]*cos(this->detectedLines[i][1]) - static_cast<float> (posXRobot) < static_cast<float> (minimumD))
+        if(abs(static_cast<int> (this->detectedLines[i][0]/cos(this->detectedLines[i][1]))) > posXRobot && abs(static_cast<int> (this->detectedLines[i][0]/cos(this->detectedLines[i][1]))) - posXRobot < minimumD)
         {
-            minimumD = static_cast<int> (this->detectedLines[i][0]*cos(this->detectedLines[i][1]) - static_cast<float> (posXRobot));
+            minimumD = abs(static_cast<int> (this->detectedLines[i][0]/cos(this->detectedLines[i][1]))) - posXRobot;
             resRhoD = this->detectedLines[i][0];
             resThetaD = this->detectedLines[i][1];
+
+            isThereRight = true;
+            wall=RIGHT;
         }
     }
 
-    if(resRhoG != 0 && resRhoD != 0)
-    {
-        lines.push_back(std::make_pair(resRhoG, resThetaG));
-        lines.push_back(std::make_pair(resRhoD, resThetaD));
+    if(isThereRight && isThereLeft)
         wall = BOTH;
-        //std::cout<<"Les deux"<<std::endl;
-    }
-    else if(resRhoG != 0 && resRhoD == 0)
+
+    if(wall == BOTH)
     {
         lines.push_back(std::make_pair(resRhoG, resThetaG));
-        wall = LEFT;
-        //std::cout<<"hauche"<<std::endl;
+        lines.push_back(std::make_pair(resRhoD, resThetaD));
     }
-    else if(resRhoG == 0 && resRhoD != 0)
+    else if(wall == LEFT)
+    {
+        lines.push_back(std::make_pair(resRhoG, resThetaG));
+    }
+    else if(wall == RIGHT)
     {
         lines.push_back(std::make_pair(resRhoD, resThetaD));
-        wall = RIGHT;
-        //std::cout<<"droite"<<std::endl;
     }
-    else if(resRhoG == 0 && resRhoD == 0)
-    {
-        wall = NONE;
-        //std::cout<<"nada"<<std::endl;
-    }
+
+    //std::cout << resRhoD << " " << resRhoG << std::endl;
 
 
     for(std::vector<std::pair<float,float> >::iterator iter = lines.begin(); iter != lines.end() ; iter++)
@@ -142,7 +148,7 @@ void HoughDetector::getDetectedLines(std::vector<std::pair<float, float> > &line
         pt2.y = cvRound(y0-1000*(cos(theta)));
 
         cv::line(this->map, pt1, pt2, cv::Scalar(255,255,255), 3, 8);
-     }
-     //std::cout<<this->detectedLines.size()<<" "<<lines.size()<<std::endl;
-     cv::imshow("debug console", this->map);
+    }
+    //std::cout<<this->detectedLines.size()<<" "<<lines.size()<<std::endl;
+    cv::imshow("debug console", this->map);
 }

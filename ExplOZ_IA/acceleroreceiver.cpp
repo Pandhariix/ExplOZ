@@ -12,6 +12,9 @@ void AcceleroReceiver::extractData(){
     ds >> accX;
     ds >> accY;
     ds >> accZ;
+    angleZ=angleZ+accZ*(appTime->elapsed()-dernierAcquisitionTemps)/1000;
+    dernierAcquisitionTemps=appTime->elapsed();
 
     //qDebug() << "AccX : " << accX << " ; AccY : " << accY << " ; AccZ : " << accZ;
 }
+

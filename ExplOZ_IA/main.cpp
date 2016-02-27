@@ -36,11 +36,11 @@ int main(int argc, char *argv[])
 /*
     AcceleroReceiver accRec(ip, PORT_ACCELERO, &appTime);
     accRec.start();
-
-    AcceleroReceiver gyroRec(ip, PORT_GYRO, &appTime);
-    accRec.start();
 */
-    MotionControl motion(&appTime, &lRec, &motSender);
+    AcceleroReceiver gyroRec(ip, PORT_GYRO, &appTime);
+    gyroRec.start();
+
+    MotionControl motion(&appTime, &lRec, &motSender, &gyroRec);
     motion.start();
 
     ManualControler manual(&motSender, NULL);
